@@ -1,0 +1,32 @@
+syntax = "proto3";
+package account;
+
+option java_multiple_files = true;
+option java_outer_classname = "AccountProto";
+
+import "google/protobuf/timestamp.proto";
+
+message CreateAccountMessage {
+  string username = 1;
+  string password = 2;
+}
+
+message CreateAccountResult {
+  string savedId = 1;
+}
+
+message ChangeAccountStatusMessage {
+  string reason = 1;
+}
+
+message ChangeAccountStatusResult {
+  bool success = 1;
+}
+
+
+
+service Account {
+  rpc CreateAccount (CreateAccountMessage) returns (CreateAccountResult) {}
+  rpc Block (ChangeAccountStatusMessage) returns (ChangeAccountStatusResult) {}
+  rpc Unblock (ChangeAccountStatusMessage) returns (ChangeAccountStatusResult) {}
+}
