@@ -6,6 +6,10 @@ include("core:common")
 
 include("services")
 include("services:account-svc")
+
 include("shared")
 include("shared:grpc")
-findProject(":shared:grpc")?.name = "grpc"
+
+include("quarkus")
+include("quarkus:auth-qk")
+include("quarkus:common-qk")

@@ -4,7 +4,9 @@ import account.*;
 import account.AccountGrpc.AccountImplBase;
 import io.grpc.stub.StreamObserver;
 import jakarta.inject.Singleton;
+import lamph.emon.auth.usecase.params.BlockAccountInput;
 import lamph.emon.auth.usecase.params.CreateAccountInput;
+import lamph.emon.auth.usecase.params.UnBlockAccountInput;
 import lamph.services.AccountService;
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +19,7 @@ public class AccountGrpcImpl extends AccountImplBase {
     @Override
     public void createAccount(CreateAccountMessage request, StreamObserver<CreateAccountResult> responseObserver) {
         try {
-            CreateAccountInput input = new CreateAccountInput(request.getUsername(), request.getPassword());
+            CreateAccountInput input = new CreateAccountInput(request.getUsername(), request.getPassword(), null, null);
             String savedId = accountService.createAccount(input);
             responseObserver.onNext(
                     CreateAccountResult.newBuilder().setSavedId(savedId).build()
@@ -31,11 +33,33 @@ public class AccountGrpcImpl extends AccountImplBase {
 
     @Override
     public void block(ChangeAccountStatusMessage request, StreamObserver<ChangeAccountStatusResult> responseObserver) {
-        super.block(request, responseObserver);
+        try {
+            BlockAccountInput input = new BlockAccountInput(
+                    request.getAccountId(), request.getReason()
+            );
+            accountService.blockAccount(input);
+
+            responseObserver.onNext(
+                    ChangeAccountStatusResult.newBuilder().build()
+            );
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void unblock(ChangeAccountStatusMessage request, StreamObserver<ChangeAccountStatusResult> responseObserver) {
-        super.unblock(request, responseObserver);
+        try {
+            UnBlockAccountInput input = new UnBlockAccountInput(
+                    request.getAccountId(), request.getReason()
+            );
+            accountService.unBlockAccount(input);
+
+            responseObserver.onNext(
+                    ChangeAccountStatusResult.newBuilder().build()
+            );
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
     }
 }

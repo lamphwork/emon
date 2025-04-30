@@ -16,7 +16,8 @@ message CreateAccountResult {
 }
 
 message ChangeAccountStatusMessage {
-  string reason = 1;
+  string accountId = 1;
+  string reason = 2;
 }
 
 message ChangeAccountStatusResult {

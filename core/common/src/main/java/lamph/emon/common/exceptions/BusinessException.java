@@ -1,7 +1,10 @@
 package lamph.emon.common.exceptions;
 
+import lombok.Getter;
+
 import java.util.Map;
 
+@Getter
 public class BusinessException extends RuntimeException {
 
     protected Map<String, Object> details;

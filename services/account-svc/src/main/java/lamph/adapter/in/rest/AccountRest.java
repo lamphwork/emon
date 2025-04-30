@@ -22,7 +22,7 @@ public class AccountRest {
 
     @Post(consumes = MediaType.APPLICATION_JSON)
     HttpResponse<String> createAccount(@Body CreateAccountReq req) {
-        CreateAccountInput input = new CreateAccountInput(req.username(), req.password());
+        CreateAccountInput input = new CreateAccountInput(req.username(), req.password(), req.roles(), req.permissions());
         return HttpResponse.ok(accountService.createAccount(input));
     }
 

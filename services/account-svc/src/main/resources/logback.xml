@@ -9,6 +9,10 @@
         </encoder>
     </appender>
 
+    <!-- jooq -->
+    <logger name="org.jooq.tools.LoggerListener" level="DEBUG"/>
+    <logger name="org.jooq" level="DEBUG"/>
+
     <root level="info">
         <appender-ref ref="STDOUT"/>
     </root>
